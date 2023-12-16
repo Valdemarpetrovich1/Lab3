@@ -1,0 +1,84 @@
+<html>
+<head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #007BFF;
+            color: #fff;
+            transition: background-color 0.5s ease-in-out; /* Анимация смены цвета фона */
+        }
+
+        #clock {
+            font-size: 36px;
+        }
+
+        #colorChangeButton {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #colorChangeButton:hover {
+            background-color: #003366;
+        }
+    </style>
+</head>
+<body>
+    <div id="clock"></div>
+    
+    <!-- Добавляем кнопку для изменения цвета фона -->
+    <button id="colorChangeButton" onclick="changeBackgroundColor()">Change Background Color</button>
+
+    <script>
+        function numberToRoman(num) {
+            if (num < 1 || num > 3999) return "NULLA";
+            const romanNumerals = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
+            const decimalValues = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+            let roman = "";
+            for (let i = 0; i < decimalValues.length; i++) {
+                while (num >= decimalValues[i]) {
+                    roman += romanNumerals[i];
+                    num -= decimalValues[i];
+                }
+            }
+            return roman;
+        }
+
+        function getCurrentDateTimeInRomanNumerals() {
+            const now = new Date();
+            const year = numberToRoman(now.getFullYear());
+            const month = numberToRoman(now.getMonth() + 1);
+            const day = numberToRoman(now.getDate());
+            const hours = numberToRoman(now.getHours());
+            const minutes = numberToRoman(now.getMinutes());
+            const seconds = numberToRoman(now.getSeconds());
+
+            return `Date: ${year}-${month}-${day}, Time: ${hours}:${minutes}:${seconds}`;
+        }
+
+        function updateClock() {
+            const clockElement = document.getElementById("clock");
+            clockElement.textContent = getCurrentDateTimeInRomanNumerals();
+        }
+
+        function changeBackgroundColor() {
+            // Генерируем случайный цвет в формате #RRGGBB
+            const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+            
+            // Применяем новый цвет фона
+            document.body.style.backgroundColor = randomColor;
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>

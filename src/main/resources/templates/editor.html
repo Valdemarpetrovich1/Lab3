@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование HTML файла</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #fff;
+        }
+
+        #editorContainer {
+            border: 2px solid #333;
+            background-color: #333;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #fileNameInput {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            background-color: #1a1a1a;
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+
+        #editor {
+            width: 100%;
+            height: 400px;
+            background-color: #1a1a1a;
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 10px;
+            box-sizing: border-box;
+            resize: none;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #800080;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #4b004b;
+        }
+
+        #previewButton {
+            background-color: #800080;
+            margin-right: 10px;
+        }
+
+        #previewButton:hover {
+            background-color: #4b004b;
+        }
+
+        #deleteButton {
+            background-color: #e60000;
+            margin-right: 10px;
+        }
+
+        #deleteButton:hover {
+            background-color: #990000;
+        }
+    </style>
+</head>
+<body>
+
+<div id="editorContainer">
+    <form th:action="@{/editor}" method="post">
+        <input type="text" id="fileNameInput" th:value="${fileName}" th:name="fileName" readonly>
+        <textarea id="editor" th:text="${fileContent}" placeholder="Введите HTML код здесь..." th:name="fileContent"></textarea>
+
+        <a th:href="@{/View/{fileName}(fileName=${fileName})}">
+            <button type="button" id="previewButton">Предпросмотр</button>
+        </a>
+
+        <button type="submit">Сохранить изменения</button>
+
+        <a th:href="@{/editor/delete/{fileName}(fileName=${fileName})}">
+            <button type="button" id="deleteButton">Удалить файл</button>
+        </a>
+    </form>
+</div>
+
+</body>
+</html>

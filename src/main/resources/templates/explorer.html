@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Просмотр файлов</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #1a1a1a; /* Тёмный фон */
+            color: #fff; /* Белый цвет текста */
+        }
+
+        #fileExplorerContainer {
+            border: 2px solid #333;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 60%;
+            max-width: 800px;
+            margin: 20px;
+            overflow-y: auto;
+            max-height: 400px;
+            scrollbar-color: #333 #1a1a1a;
+            scrollbar-width: thin;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #header {
+            text-align: center;
+            font-size: 24px;
+            color: #fff;
+            border-bottom: 2px solid #333;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+        }
+
+        #fileExplorer {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .folder, .file {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .folderIcon, .fileIcon {
+            margin-right: 10px;
+            font-size: 24px;
+        }
+
+        .file:hover, .folder:hover {
+            background-color: #555;
+        }
+
+        #fileOptions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1a1a1a;
+            padding: 10px;
+            position: sticky;
+            bottom: 0;
+            z-index: 1;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #800080;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #4b004b;
+        }
+
+        /* Стиль для скрытия полосы прокрутки */
+        #fileExplorerContainer::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        #fileExplorerContainer::-webkit-scrollbar-thumb {
+            background-color: #333;
+            border-radius: 10px;
+        }
+
+        /* Убираем подчеркивание гиперссылок */
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        #createFileInput {
+            flex: 1;
+            margin-right: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div id="fileExplorerContainer">
+    <div id="header">Просмотр файлов</div>
+
+    <div id="fileExplorer">
+        <div th:each="fileSystemItem : ${fileSystemItems}">
+            <a th:href="@{/editor/{fileName}(fileName=${fileSystemItem.name})}">
+                <div class="file">
+                    <span class="fileIcon">📄</span>
+                    <span th:text="${fileSystemItem.name}"></span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div id="fileOptions">
+        <form method="post" action="/explorer/createfile">
+            <input type="text" id="createFileInput" th:name="fileName" placeholder="Введите название файла...">
+            <button type="submit">Создать файл</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

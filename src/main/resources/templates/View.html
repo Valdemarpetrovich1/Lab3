@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Просмотр HTML файла</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        #previewContainer {
+            width: 80vw; /* Ширина окна предпросмотра (80% от ширины экрана) */
+            height: 80vh; /* Высота окна предпросмотра (80% от высоты экрана) */
+            border: 2px solid #333;
+            background-color: #333;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Добавлено для скрытия возможной прокрутки */
+        }
+
+        h2 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        div {
+            border: 1px solid #555;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #1a1a1a;
+            color: #fff;
+            overflow: auto;
+            height: 100%; /* Заполнение всей доступной высоты */
+        }
+    </style>
+</head>
+<body>
+<div id="previewContainer">
+    <h2 th:text="'Просмотр файла: ' + ${fileName}"></h2>
+    <div th:utext="${fileContent}"></div>
+</div>
+</body>
+</html>
